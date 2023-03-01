@@ -1,9 +1,13 @@
 
-const cv ='https://randomuser.me/api/?format=JSON&results=80&noinfo&exc=login,registered,id'
 let datos="";
 
 fechRUG("","",50);
-mostrarPerfil(0);
+
+
+
+/* 
+Funcion para generar una cierta cantidad de usuarios con una cierta nacionalidad y sexo
+*/
 
 async function fechRUG(gen,nat,cant) {
     const response = await fetch('https://randomuser.me/api/?format=JSON&results='+cant+'&noinfo&exc=login,registered,id'+gen+nat);
@@ -74,5 +78,11 @@ function mostrarPerfil(nPerfil){
     document.getElementById('cell').innerHTML = 'Celular: '+ datos.results[nPerfil].cell;
     document.getElementById('locCuidad').innerHTML = 'Cuidad: '+ estado;
     document.getElementById('locCalle').innerHTML = 'Domicilio: '+ calle;
+
+    let long = datos.results[nPerfil].location.coordinates.longitude;
+    let lat = datos.results[nPerfil].location.coordinates.latitude;
+    
+    document.getElementById('mapa').setAttribute('href','https://www.openstreetmap.org/#map=18/'+lat+'/'+long);/* Lamentablemente las coordenadas son generadas al azar y corresponden a un lugar necesariamente */
+    document.getElementById('mapa').innerHTML='Latitud: '+lat+'°  Longitud: '+long+'°';
 
 }
